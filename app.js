@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors")
 require("dotenv").config(); //
 const connectDB = require("./config/dbConfig")
-const productRoute = require("./routes/productRoutes");
+const EquipmentRoute = require("./routes/productRoutes");
 const userRoute = require("./routes/userRoutes");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json");
@@ -16,7 +16,7 @@ app.use(cors())
 
 
 app.use("/api/auth", userRoute);
-app.use("/farmerProduct", productRoute)
+app.use("/createProduct", EquipmentRoute)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const startServer = async () => {

@@ -26,4 +26,8 @@ const authMiddlewareHandler = async (req, res, next)=>{
     }
 }
 
+
+function authorizeRole (...allowedroles){
+
+}
 module.exports = authMiddlewareHandler

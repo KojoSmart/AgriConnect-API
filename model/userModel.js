@@ -17,10 +17,12 @@ const userSchema = new mongoose.Schema({
    type: String,
    required: true
     },
+
     phoneNumber:{
         type: Number,
         required: true
     },
+    
     region:{
     type: String,
     required: true
@@ -28,8 +30,14 @@ const userSchema = new mongoose.Schema({
     role:{
         type: String,
         default:"user"
-    }
-    
+    },
+    location: {
+        type: String
+    },
+
+    // Only for Admin
+   companyName: { type: String },
+   address: { type: String }
 }, {timestamps: true})
 
 module.exports = mongoose.model("User", userSchema)

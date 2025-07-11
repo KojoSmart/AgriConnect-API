@@ -2,12 +2,14 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
 
-    vendor :{
+    owner :{
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
 
     },
-
+    name:{
+        type: String,
+    },
     image:{
         public_id : String,
         url: String
@@ -19,13 +21,19 @@ const productSchema = new mongoose.Schema({
     phoneNumber:{
         type: Number
     },
-    community:{
-        type: String
+    // location:{
+    //     type: String
+    // },
+    description:{
+  type: String
     },
-    cropName:{
-        type: String
-    }
     
-})
+    isAvailable:{
+        type: Boolean
+    },
 
-module.exports = mongoose.model("product", productSchema )
+    createdAt: Date
+    
+}, {timestamps: true})
+
+module.exports = mongoose.model("Equipment", productSchema )
