@@ -27,7 +27,18 @@ const authMiddlewareHandler = async (req, res, next)=>{
 }
 
 
-function authorizeRole (...allowedroles){
-
+function authorizedRoles (...allowedRoles){
+    return (req, res, next)=>{
+        if(!allowedRoles.includes(req.user.role)){
+            return res.status(403).json({
+                message: 'Access forbidden'
+            })
+        }
+        next();
+    }
 }
-module.exports = authMiddlewareHandler
+
+module.exports = {
+    authMiddlewareHandler,
+    authorizedRoles
+}

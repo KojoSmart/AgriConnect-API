@@ -3,15 +3,15 @@ const router = express.Router();
 const upload = require("../middleware/uploadFileMiddleware")
 
 const {createEquipment, deleteEquipment, updateEquipment, getAllEquipment, getAllEquipmentByOwner, getOneEquipment} = require("../controllers/equipmentController");
-const authMiddlewareHandler = require("../middleware/authMiddleware");
+const {authMiddlewareHandler, authorizedRoles} = require("../middleware/authMiddleware");
 
 
 
-router.post("/adminCreate", authMiddlewareHandler, upload.single("image"), createEquipment);
-router.delete("/adminDelete/:id", authMiddlewareHandler, deleteEquipment)
+router.post("/adminCreate", authMiddlewareHandler, authorizedRoles("admin"),  upload.single("file"), createEquipment);
+router.delete("/adminDelete/:id", authMiddlewareHandler, authorizedRoles("admin"), deleteEquipment)
 
-router.put("/adminUpdate/:id", authMiddlewareHandler, updateEquipment ),
-router.get("/adminGetAll", authMiddlewareHandler, getAllEquipmentByOwner)
+router.put("/adminUpdate/:id", authMiddlewareHandler, authorizedRoles("admin"), upload.single("file"), updateEquipment ),
+router.get("/adminGetAll", authMiddlewareHandler, authorizedRoles("admin"), getAllEquipmentByOwner)
 router.get("/viewOneEquipment/:id", authMiddlewareHandler, getOneEquipment)
 router.get("/getAllByUser", getAllEquipment);
 

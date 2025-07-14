@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    
+    fullName:{
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true,
@@ -37,7 +40,6 @@ const userSchema = new mongoose.Schema({
 
     // Only for Admin
    companyName: { type: String },
-   address: { type: String }
 }, {timestamps: true})
 
 module.exports = mongoose.model("User", userSchema)

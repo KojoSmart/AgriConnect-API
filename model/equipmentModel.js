@@ -21,6 +21,9 @@ const productSchema = new mongoose.Schema({
     phoneNumber:{
         type: Number
     },
+    category:{
+        type: String
+    },
     // location:{
     //     type: String
     // },

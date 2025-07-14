@@ -1,10 +1,11 @@
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const { urlencoded } = require("express");
 require("dotenv").config();
 
 const registerUser = async (req, res) => {
-  const { username, email, password, phoneNumber, region, location, role } =
+  const { fullName, username, email, password, phoneNumber, region, location, role } =
     req.body;
 
   try {
@@ -17,6 +18,7 @@ const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
+      fullName,
       username,
       email,
       password: hashedPassword,
@@ -29,6 +31,7 @@ const registerUser = async (req, res) => {
 
     res.status(201).json({
       message: "User registered successfully",
+      user
     });
   } catch (error) {
     console.error("Error in register function:", error); // this logs the error
@@ -40,6 +43,7 @@ const registerUser = async (req, res) => {
 
 const registerAdmin = async (req, res) => {
   const {
+    fullName,
     username,
     email,
     password,
@@ -47,8 +51,7 @@ const registerAdmin = async (req, res) => {
     role,
     region,
     location,
-    companyName,
-    address,
+    companyName
   } = req.body;
 
   try {
@@ -59,6 +62,7 @@ const registerAdmin = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
+      fullName,
       username,
       email,
       password: hashedPassword,
@@ -71,7 +75,10 @@ const registerAdmin = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "Admin registered successfully" });
+    res.status(201).json({ 
+      message: "Admin registered successfully" ,
+     newUser
+  });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({
@@ -110,6 +117,10 @@ const login = async (req, res) => {
       user: {
         username: user.username,
         email: user.email,
+        phoneNumber: user.phoneNumber,
+        location: user.location,
+        companyName: user.companyName,
+        fullName: user.fullName
       },
     });
   } catch (error) {
