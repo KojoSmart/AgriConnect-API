@@ -5,10 +5,10 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "agriconnect-api-aa28.onrender.com",
+  "host": "localhost:8008",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/api/auth/registerUser": {
@@ -375,6 +375,62 @@
     "/createProduct/getAllByUser": {
       "get": {
         "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/createProduct/searchItemByVendor": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/createProductsearchItemByUser": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

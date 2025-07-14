@@ -294,7 +294,89 @@ const updateEquipment = async (req, res) => {
     });
   }
 };
+const searchItemByVendor = async(req, res)=>{
 
+  try {
+    const {name, category} = req.query;
+    const query ={};
+
+    query.owner = req.user.id;
+
+    //search by category
+  if(category){
+    query.category={$regex: category, $options: "i"}; // case-insensitive
+  }
+  //search by name
+   if(name){
+    query.name={$regex: name, $options: "i"}; // case-insensitive
+
+  }
+  const search = await Equipment.find(query);
+  if (search.length === 0) {
+      return res.status(404).json({
+        success: false,
+        items: [],
+        message: "No equipment found matching your search criteria",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      items: search,
+      message: "Equipment retrieved successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+      message: "Failed to retrieve equipment. An unexpected error occurred",
+    });
+  }
+    
+ 
+}
+
+
+const searchItemByUser = async(req, res)=>{
+
+  try {
+    const {name, category} = req.query;
+    const query ={};
+
+
+    //search by category
+  if(category){
+    query.category={$regex: category, $options: "i"}; // case-insensitive
+  }
+  //search by name
+   if(name){
+    query.name={$regex: name, $options: "i"}; // case-insensitive
+
+  }
+  const search = await Equipment.find(query);
+  if (search.length === 0) {
+      return res.status(404).json({
+        success: false,
+        items: [],
+        message: "No equipment found matching your search criteria",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      items: search,
+      message: "Equipment retrieved successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+      message: "Failed to retrieve equipment. An unexpected error occurred",
+    });
+  }
+    
+ 
+}
 const getAllEquipmentByOwner = async (req, res) => {
   try {
     // const allAdverts = await Advert.find();
@@ -327,4 +409,6 @@ module.exports = {
   updateEquipment,
   getAllEquipmentByOwner,
   getOneEquipment,
+  searchItemByVendor,
+  searchItemByUser
 };
