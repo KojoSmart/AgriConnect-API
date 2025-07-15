@@ -29,7 +29,12 @@ const getBookingsForVendor = async (req, res) => {
     const bookings = await Booking.find({ equipment: { $in: equipIds } })
       .populate("equipment")
       .populate("user", "name email");
-
+     if(!bookings){
+        return res.status(404).json({
+            message: "No booking found",
+            items: []
+        })
+     }
     res.json(bookings);
   } catch (error) {
     res.status(400).json({ message: "Could not load bookings" });
