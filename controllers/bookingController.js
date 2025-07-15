@@ -8,7 +8,7 @@ const bookAEquipment = async (req, res) => {
     const { equipId, requestedDate } = req.body;
 
     const booking = await Booking.create({
-      equip: equipId,
+      equipment: equipId,
       user: req.user.id,
       requestedDate,
     });
