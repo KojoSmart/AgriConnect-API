@@ -34,14 +34,20 @@ const productCreate = Joi.object({
       "string.min": "category must be at least 2 characters",
       "any.required": "category is required",
     }),
-      phoneNumber: Joi.string()
-    .pattern(/^[0-9]{10,15}$/)
-    .required()
-    .messages({
-      "string.pattern.base": "Phone number must be 10 to 15 digits",
-      "string.empty": "Phone number is required",
-      "any.required": "Phone number is required",
-    }),
+    phoneNumber: Joi.string()
+  .pattern(/^[0-9]{10,15}$/)
+  .messages({
+    "string.pattern.base": "Phone number must be 10 to 15 digits",
+  }),
+
+    //   phoneNumber: Joi.string()
+    // .pattern(/^[0-9]{10,15}$/)
+    // .required()
+    // .messages({
+    //   "string.pattern.base": "Phone number must be 10 to 15 digits",
+    //   "string.empty": "Phone number is required",
+    //   "any.required": "Phone number is required",
+    // }),
 
 });
 
