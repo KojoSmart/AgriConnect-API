@@ -92,16 +92,13 @@ const equipValidate =Joi.object({
       "any.required": "description is required",
     }),
      
-     phoneNumber: Joi.string()
-    .pattern(/^[0-9]{10,15}$/)
-    .required()
-    .messages({
-      "string.pattern.base": "Phone number must be 10 to 15 digits",
-      "string.empty": "Phone number is required",
-    //   "any.required": "Phone number is required",
-    }),
+    phoneNumber: Joi.string()
+  .pattern(/^[0-9]{10,15}$/)
+  .messages({
+    "string.pattern.base": "Phone number must be 10 to 15 digits",
+  }),
 
-      image: Joi.string(),
+  image: Joi.string(),
 
 })
 module.exports = {
