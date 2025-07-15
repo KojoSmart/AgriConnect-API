@@ -50,7 +50,7 @@ const registerAdmin = async (req, res) => {
     phoneNumber,
     region,
     location,
-    companyName
+    companyName,
   } = req.body;
 
   try {
@@ -119,7 +119,8 @@ const login = async (req, res) => {
         phoneNumber: user.phoneNumber,
         location: user.location,
         companyName: user.companyName,
-        fullName: user.fullName
+        fullName: user.fullName,
+        role: user.role
       },
     });
   } catch (error) {

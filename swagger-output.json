@@ -41,9 +41,6 @@
                 },
                 "location": {
                   "example": "any"
-                },
-                "role": {
-                  "example": "any"
                 }
               }
             }
@@ -85,9 +82,6 @@
                   "example": "any"
                 },
                 "phoneNumber": {
-                  "example": "any"
-                },
-                "role": {
                   "example": "any"
                 },
                 "region": {
@@ -440,6 +434,67 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/bookEquip/bookEquipment": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "equipId": {
+                  "example": "any"
+                },
+                "requestedDate": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/bookEquip/getBookingsForVendor": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
