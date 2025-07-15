@@ -5,12 +5,12 @@ const User = require('../model/userModel')
 //  User or farmer books an advert
 const bookAEquipment = async (req, res) => {
   try {
-    const { equipId, date } = req.body;
+    const { equipId, requestedDate } = req.body;
 
     const booking = await Booking.create({
       equip: equipId,
       user: req.user.id,
-      date,
+      requestedDate,
     });
 
     res.status(201).json({ message: "Booking request sent", booking });
