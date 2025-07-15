@@ -70,8 +70,7 @@ const registerAdmin = async (req, res) => {
       region,
       role: "admin",
       companyName,
-      location,
-      address,
+      location
     });
 
     await newUser.save();
