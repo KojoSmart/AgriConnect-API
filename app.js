@@ -5,6 +5,7 @@ require("dotenv").config(); //
 const connectDB = require("./config/dbConfig")
 const EquipmentRoute = require("./routes/productRoutes");
 const userRoute = require("./routes/userRoutes");
+const bookingRoute = require("./routes/bookingRoutes")
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger-output.json");
 
@@ -16,7 +17,8 @@ app.use(cors())
 
 
 app.use("/api/auth", userRoute);
-app.use("/createProduct", EquipmentRoute)
+app.use("/createProduct", EquipmentRoute);
+app.use("/bookEquip", bookingRoute)
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const startServer = async () => {

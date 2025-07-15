@@ -5,7 +5,7 @@ const { urlencoded } = require("express");
 require("dotenv").config();
 
 const registerUser = async (req, res) => {
-  const { fullName, username, email, password, phoneNumber, region, location, role } =
+  const { fullName, username, email, password, phoneNumber, region, location } =
     req.body;
 
   try {
@@ -25,7 +25,7 @@ const registerUser = async (req, res) => {
       phoneNumber,
       region,
       location,
-      role: "farmer",
+      role: "user",
     });
     await user.save();
 
@@ -48,7 +48,6 @@ const registerAdmin = async (req, res) => {
     email,
     password,
     phoneNumber,
-    role,
     region,
     location,
     companyName
@@ -114,6 +113,7 @@ const login = async (req, res) => {
     res.status(201).json({
       token: token,
       user: {
+        id: user._id,
         username: user.username,
         email: user.email,
         phoneNumber: user.phoneNumber,
