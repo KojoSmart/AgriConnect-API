@@ -23,8 +23,10 @@ const productSchema = new mongoose.Schema({
     },
     category:{
         type: String,
-        enum:["Caterpillar","Tractor", "Harvestor", "Mechanical Planter", "Land Leveller"],
-        required: true
+        enum:["caterpillar","tractor", "harvestor", "mechanical planter", "land leveller"],
+        required: true,
+          lowercase: true, //  this converts input to lowercase before saving
+
     },
     // location:{
     //     type: String

@@ -29,11 +29,7 @@ const productCreate = Joi.object({
       "string.min": "description must be at least 2 characters",
       "any.required": "description is required",
     }),
-    category: Joi.string().min(2).max(100).required().messages({
-     "string.empty": "cateogory is required",
-      "string.min": "category must be at least 2 characters",
-      "any.required": "category is required",
-    }),
+    category: Joi.string().min(2).max(100),
     phoneNumber: Joi.string()
   .pattern(/^[0-9]{10,15}$/)
   .messages({
