@@ -246,7 +246,7 @@ const updateEquipment = async (req, res) => {
       });
     }
 
-    // ✅ Validate input
+    //  Validate input
     const { error, value } = equipValidate.validate(req.body, {
       abortEarly: false,
     });
@@ -259,7 +259,7 @@ const updateEquipment = async (req, res) => {
       });
     }
 
-    // ✅ If image is uploaded
+    // If image is uploaded
     if (req.file) {
       if (equip.image && equip.image.public_id) {
         await cloudinary.uploader.destroy(equip.image.public_id);
@@ -274,7 +274,7 @@ const updateEquipment = async (req, res) => {
       };
     }
 
-    // ✅ Use Equipment model, not equip instance
+    //  Use Equipment model, not equip instance
     const updatedEquipment = await Equipment.findByIdAndUpdate(id, value, {
       new: true,
       runValidators: true,
@@ -402,6 +402,46 @@ const getAllEquipmentByOwner = async (req, res) => {
     });
   }
 };
+
+
+
+
+const oneEquipmentByVendor = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid advert ID fromat",
+      });
+    }
+
+    const singleEquipment = await Equipment.findById(id);
+    if (singleEquipment.owner.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "You are not allowed to see this Equipment.",
+      });
+    }
+    if (!singleEquipment) {
+      return res.status(404).json({
+        success: false,
+        message: "Equipment not found",
+      });
+    }
+    return res.status(200).json({
+      sucess: true,
+      item: singleEquipment,
+      message: "Equipment retrieved successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrive Equipment. An unexpected error occurred.",
+      error: error.message,
+    });
+  }
+};
 module.exports = {
   createEquipment,
   getAllEquipment,
@@ -410,5 +450,6 @@ module.exports = {
   getAllEquipmentByOwner,
   getOneEquipment,
   searchItemByVendor,
-  searchItemByUser
+  searchItemByUser,
+  oneEquipmentByVendor
 };

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../middleware/uploadFileMiddleware")
 
-const {createEquipment, deleteEquipment, updateEquipment, getAllEquipment, getAllEquipmentByOwner, getOneEquipment, searchItemByVendor, searchItemByUser} = require("../controllers/equipmentController");
+const {createEquipment, deleteEquipment, updateEquipment, getAllEquipment, getAllEquipmentByOwner, getOneEquipment, searchItemByVendor, searchItemByUser, oneEquipmentByVendor} = require("../controllers/equipmentController");
 const {authMiddlewareHandler, authorizedRoles} = require("../middleware/authMiddleware");
 
 
@@ -15,7 +15,8 @@ router.get("/adminGetAll", authMiddlewareHandler, authorizedRoles("admin"), getA
 router.get("/viewOneEquipment/:id", authMiddlewareHandler, getOneEquipment)
 router.get("/getAllByUser", getAllEquipment);
 router.get("/searchItemByVendor", searchItemByVendor)
-router.get("searchItemByUser", searchItemByUser)
+router.get("searchItemByUser", searchItemByUser);
+router.get("oneEquipmentByVendor/:id", authMiddlewareHandler, authorizedRoles("admin"), oneEquipmentByVendor)
 
 
 module.exports = router

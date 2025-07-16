@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { urlencoded } = require("express");
 require("dotenv").config();
+const mailTransporter = require('../utils/mailTransporter');
+const signupMailTemplate = require('../utils/signUpMailTemplate')
 
 const registerUser = async (req, res) => {
   const { fullName, username, email, password, phoneNumber, region, location } =
@@ -29,8 +31,15 @@ const registerUser = async (req, res) => {
     });
     await user.save();
 
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      ...signupMailTemplate(username),
+    };
+
+    await mailTransporter.sendMail(mailOptions);
     res.status(201).json({
-      message: "User registered successfully",
+      message: "User registered successfully email sent",
       user
     });
   } catch (error) {
@@ -73,8 +82,17 @@ const registerAdmin = async (req, res) => {
     });
 
     await newUser.save();
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      ...signupMailTemplate(username),
+    };
+
+    await mailTransporter.sendMail(mailOptions)
+
     res.status(201).json({ 
-      message: "Admin registered successfully" ,
+      message: "Admin registered successfully email sent " ,
      newUser
   });
   } catch (err) {
