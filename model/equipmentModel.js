@@ -22,7 +22,9 @@ const productSchema = new mongoose.Schema({
         type: Number
     },
     category:{
-        type: String
+        type: String,
+        enum:["Caterpillar","Tractor", "Harvestor", "Mechanical Planter", "Land Leveller"],
+        required: true
     },
     // location:{
     //     type: String
