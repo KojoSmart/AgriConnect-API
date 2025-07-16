@@ -106,7 +106,7 @@ const registerAdmin = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { username, email, password } = req.body;
+  const {  email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
