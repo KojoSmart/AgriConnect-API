@@ -438,7 +438,7 @@
         }
       }
     },
-    "/createProductoneEquipmentByVendor/{id}": {
+    "/createProduct/oneEquipmentByVendor/{id}": {
       "get": {
         "description": "",
         "parameters": [
