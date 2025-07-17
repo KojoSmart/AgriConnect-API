@@ -15,7 +15,7 @@ router.get("/adminGetAll", authMiddlewareHandler, authorizedRoles("admin"), getA
 router.get("/viewOneEquipment/:id", authMiddlewareHandler, getOneEquipment)
 router.get("/getAllByUser", getAllEquipment);
 router.get("/searchItemByVendor", searchItemByVendor)
-router.get("searchItemByUser", searchItemByUser);
+router.get("/searchItemByUser", searchItemByUser);
 router.get("/oneEquipmentByVendor/:id", authMiddlewareHandler, authorizedRoles("admin"), oneEquipmentByVendor)
 
 
