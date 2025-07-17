@@ -12,7 +12,14 @@ const bookingSchema = new mongoose.Schema({
         ref: "User"
     },
     requestedDate: Date,
-    status: String, // "pending", "accepted", "declined"
+    
+    status: {
+        type: String,
+        enum: ["pending", "accepted", "declined"],
+        default: "pending"
+
+    },
+    // "pending", "accepted", "declined"
 
     createdAt: Date
 

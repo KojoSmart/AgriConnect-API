@@ -1,21 +1,38 @@
+const { equal } = require("joi");
 const Booking = require("../model/bookingModel");
 const Equipment= require("../model/equipmentModel");
 const User = require('../model/userModel')
+const sendEmail = require('../utils/bookingSendEmail')
 
 //  User or farmer books an advert
 const bookAEquipment = async (req, res) => {
   try {
     const { equipId, requestedDate } = req.body;
-
+    const equip = await Equipment.findById(equipId).populate("owner");
+    if(!equip){
+      res.status(404).json({message: "Equipment not found"})
+    }
     const booking = await Booking.create({
       equipment: equipId,
       user: req.user.id,
       requestedDate,
     });
+     
+    await sendEmail({
+      to:equip.owner.email,
+      subject:`
+      <p>New Booking request,</p>
+      <p>You have a new booking request for  <strong>${equip.name}</strong> on <strong>${requestedDate}</strong>`
 
-    res.status(201).json({ message: "Booking request sent", booking });
+    })
+    res.status(201).json({success: true,
+       message: "Booking request sent", 
+       booking });
   } catch (error) {
-    res.status(400).json({ message: "Booking failed", error: error.message });
+    res.status(400).json({ msuccess: false,
+      message: "Booking failed", 
+      error: error.message
+     });
   }
 };
 
@@ -31,18 +48,86 @@ const getBookingsForVendor = async (req, res) => {
       .populate("user", "fullName email");
      if(!bookings){
         return res.status(404).json({
+          success: false,
             message: "No booking found",
             items: []
         })
      }
     res.json(bookings);
   } catch (error) {
-    res.status(400).json({ message: "Could not load bookings" });
+    res.status(400).json({succeess: false,
+       message: "Could not load bookings", 
+    error: error.message });
   }
 };
 
+// vendor update booking
+const updateBookingStatus = async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+    const { status } = req.body;
+
+    // Validate status
+    if (!["accepted", "declined"].includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" });
+    }
+
+    const booking = await Booking.findById(bookingId).populate("equipment").populate("user");
+    if (!booking) return res.status(404).json({ message: "Booking not found" });
+
+    // Only allow vendor to update booking for their own ad
+    if (booking.equipment.owner.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized to update this booking" });
+    }
+
+    // Update and save booking status
+    booking.status = status;
+    await booking.save();
+
+    // Notify the user via email
+    await sendEmail({
+      to: booking.user.email,
+      subject: `Booking ${status.toUpperCase()}`,
+      html: `
+        <p>Hello ${booking.user.fullName},</p>
+        <p>Your booking for <strong>${booking.equipment.name}</strong> on <strong>${booking.requestedDate}</strong> has been <strong>${status}</strong>.</p>
+      `,
+    });
+
+    res.status(200).json({ success: true, message: `Booking ${status}`, booking });
+  } catch (error) {
+    res.status(400).json({ success: false, message: "Failed to update booking", error: error.message });
+  }
+};
+
+
+
+
+   
+//  2. Vendor gets all bookings for their ads
+// const getBookingsForVendor = async (req, res) => {
+//   try {
+//     // Find all ads owned by this vendor
+//     const ads = await Ad.find({ owner: req.user.id }).select("_id");
+//     const adIds = ads.map((ad) => ad._id);
+
+//     // Get bookings for those ads
+//     const bookings = await Booking.find({ ad: { $in: adIds } })
+//       .populate("ad")
+//       .populate("user", "name email");
+
+//     res.status(200).json({ success: true, bookings });
+//   } catch (error) {
+//     res.status(400).json({ success: false, message: "Could not load bookings", error: error.message });
+//   }
+// };
+
+// 3. Vendor updates booking status (PUT)
+
+
 module.exports={
     getBookingsForVendor,
-    bookAEquipment
+    bookAEquipment,
+    updateBookingStatus
 }
 

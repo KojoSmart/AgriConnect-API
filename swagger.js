@@ -6,10 +6,10 @@ const doc = {
     description: "Description",
   },
 //   host:"advertisement-app-1-gy0x.onrender.com",
-// host:"localhost:8008",
-   host: "agriconnect-api-aa28.onrender.com",
-  //  schemes: ["http"],
-  schemes: ["https"],
+host:"localhost:8008",
+  //  host: "agriconnect-api-aa28.onrender.com",
+   schemes: ["http"],
+  // schemes: ["https"],
   components: {
     securitySchemes: {
       bearerAuth: {
