@@ -14,7 +14,6 @@ const {
 router.post(
   "/bookEquipment",
   authMiddlewareHandler,
-  authorizedRoles("admin"),
   bookAEquipment
 );
 
