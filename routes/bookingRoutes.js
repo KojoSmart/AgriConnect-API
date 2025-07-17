@@ -23,6 +23,6 @@ router.get(
   authorizedRoles("admin"),
   getBookingsForVendor
 );
-router.patch("/updateBookingStatus/:id/status",authMiddlewareHandler,authorizedRoles("admin"), updateBookingStatus)
+router.patch("/updateBookingStatus/:id/status",authMiddlewareHandler, authorizedRoles("admin"), updateBookingStatus)
 
 module.exports = router;
