@@ -119,25 +119,7 @@ const updateBookingStatus = async (req, res) => {
   }
 };
 
-//  2. Vendor gets all bookings for their ads
-// const getBookingsForVendor = async (req, res) => {
-//   try {
-//     // Find all ads owned by this vendor
-//     const ads = await Ad.find({ owner: req.user.id }).select("_id");
-//     const adIds = ads.map((ad) => ad._id);
 
-//     // Get bookings for those ads
-//     const bookings = await Booking.find({ ad: { $in: adIds } })
-//       .populate("ad")
-//       .populate("user", "name email");
-
-//     res.status(200).json({ success: true, bookings });
-//   } catch (error) {
-//     res.status(400).json({ success: false, message: "Could not load bookings", error: error.message });
-//   }
-// };
-
-// 3. Vendor updates booking status (PUT)
 
 module.exports = {
   getBookingsForVendor,

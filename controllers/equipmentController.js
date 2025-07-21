@@ -300,7 +300,6 @@ const searchItemByVendor = async(req, res)=>{
     const {name, category} = req.query;
     const query ={};
 
-    query.owner = req.user.id;
 
     //search by category
   if(category){
