@@ -10,7 +10,7 @@ const sendEmail = async ({ to, subject, html }) => {
         pass: process.env.EMAIL_PASS,     // your email password or app password
       },
     });
-
+ 
     const mailOptions = {
       from: `"AgriConnect " <${process.env.EMAIL_USER}>`,
       to,

@@ -12,7 +12,7 @@ router.delete("/adminDelete/:id", authMiddlewareHandler, authorizedRoles("admin"
 
 router.put("/adminUpdate/:id", authMiddlewareHandler, authorizedRoles("admin"), upload.single("file"), updateEquipment ),
 router.get("/adminGetAll", authMiddlewareHandler, authorizedRoles("admin"), getAllEquipmentByOwner)
-router.get("/viewOneEquipment/:id", authMiddlewareHandler, getOneEquipment)
+router.get("/viewOneEquipment/:id", getOneEquipment)
 router.get("/getAllByUser", getAllEquipment);
 router.get("/searchItemByVendor", searchItemByVendor)
 router.get("/searchItemByUser", searchItemByUser);
